@@ -5,8 +5,8 @@
 #ifndef HELP_FUNCTIONS_H_
 #define HELP_FUNCTIONS_H_
 
-#include <math.h>
 #include <iostream>
+#include <cmath>
 #include <vector>
 #include <fstream>
 #include <sstream>
@@ -14,11 +14,13 @@
 #include "measurement_package.h"
 
 
+const float kPI = std::atan(1.0f)*4;
+
 class help_functions {
 public:
 
   //definition of one over square root of 2*pi
-  float ONE_OVER_SQRT_2PI = 1/sqrt(2*M_PI);
+  float one_over_sqrt_2pi = 1/std::sqrt(2*kPI);
 
   //definition square
   float squared(float x)
@@ -26,14 +28,15 @@ public:
     return x*x;
   }
 
-  /*****************************************************************************
-   * normpdf(X,mu,sigma) computes the probability function at values x using the
-   * normal distribution with mean mu and standard deviation std. x, mue and
-   * sigma must be scalar! The parameter std must be positive.
-   * The normal pdf is y=f(x;mu,std)= 1/(std*sqrt(2pi)) e[ -(x−mu)^2 / 2*std^2 ]
-  *****************************************************************************/
+  /*
+   * Computer the probability density function of a Gaussian distribution
+   * at value x.
+   * @param x: x coordinate.
+   * @param mu: mean.
+   * @param std: standard deviation.
+   */
   float normpdf(float x, float mu, float std) {
-    return (ONE_OVER_SQRT_2PI/std)*exp(-0.5*squared((x-mu)/std));
+    return (one_over_sqrt_2pi/std)*std::exp(-0.5f*squared((x-mu)/std));
   }
 
   //function to normalize a vector
@@ -101,6 +104,7 @@ public:
     }
     return true;
   }
+
 
   /* Reads measurements from a file.
    * @param filename Name of file containing measurement  data.
@@ -170,17 +174,16 @@ public:
     return true;
   }
 
+  /*
+   *
+   */
   inline bool compare_data(std::string filename_gt,
                            std::vector<float>& result_vec) {
-    /*****************************************************************************
-     *  print/compare results:												   *
-     *****************************************************************************/
-    //get GT data
-    //define file name of map
+    //declare ground truth data
     std::vector<float> gt_vec;
 
     //get file of map
-    std::ifstream in_file_gt(filename_gt.c_str(),std::ifstream::in);
+    std::ifstream in_file_gt(filename_gt.c_str(), std::ifstream::in);
 
     std::string line_gt;
 
@@ -195,6 +198,7 @@ public:
       gt_vec.push_back(gt_value);
 
     }
+
     float error_sum;
     float belief_sum;
     error_sum  = 0.0f;

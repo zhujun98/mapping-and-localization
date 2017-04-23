@@ -11,7 +11,7 @@ class MeasurementPackage {
 public:
 
   struct control_s{
-    float delta_x_f;     // move to successor in x position
+    float delta_x_f;  // move to successor in x position
   };
 
   struct observation_s{

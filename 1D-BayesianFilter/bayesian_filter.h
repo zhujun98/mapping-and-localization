@@ -14,6 +14,7 @@
 #include "help_functions.h"
 
 class BayesianFilter {
+
 public:
   //constructor
   BayesianFilter();
@@ -34,8 +35,11 @@ private:
   //flag, if filter is initialized
   bool is_initialized_;
 
-  //precision of control information
+  //standard deviation of control
   float control_std_;
+
+  //standard deviation of observations:
+  float observation_std_;
 
   //initial belief of state x
   std::vector<float> bel_x_init_;

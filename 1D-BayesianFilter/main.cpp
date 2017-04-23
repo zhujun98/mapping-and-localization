@@ -6,7 +6,6 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <string>
 #include "measurement_package.h"
 #include "map.h"
 #include "help_functions.h"
@@ -85,7 +84,6 @@ int main() {
   //create instance of 1d_bayesian localization filter:
   BayesianFilter localization_1d_bayesian;
 
-  //cycle:
   for (size_t t = 0; t < measurement_pack_list.size(); ++t){
 
     //Call 1d_bayesian filter:

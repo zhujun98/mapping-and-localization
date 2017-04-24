@@ -5,38 +5,20 @@ Python script helps to understand particle filter
 """
 
 import random
-import numpy as np
-import matplotlib as plt
+import copy
 
 from robot import Robot
+from utilities import rmse
 
 
 landmarks = [[20.0, 20.0], [80.0, 80.0], [20.0, 80.0], [80.0, 20.0]]
 space = [100, 100]
 
-def eval(ref, particles):
-    """Calculate the RMSE"""
-    sum = 0.0
-    for p in particles:
-        dx = np.abs(p.x - ref.x)
-        # Cyclic space
-        if dx > space[0]/2.0:
-            dx = space[0] - dx
-
-        # Cyclic space
-        dy = np.abs(p.y - ref.y)
-        if dy > space[1]/2.0:
-            dy = space[1] - dy
-
-        sum += dx**2 + dy**2
-
-    return np.sqrt(sum / float(len(particles)))
-
-
+# This is the reference particle without any noise (ground truth)
 my_robot = Robot(space, landmarks)
 
-# Initialize 1000 particles
-n = 1000
+# No. of particles
+n = 2000  # Play with n to see the effect of particle number
 particles = []
 for i in range(n):
     particle = Robot(space, landmarks)
@@ -44,10 +26,10 @@ for i in range(n):
     particles.append(particle)
 
 # Print initial RMSE
-print(eval(my_robot, particles))
+print(rmse(my_robot, particles, space))
 
 step = 0
-n_steps = 10
+n_steps = 20
 while step < n_steps:
     step += 1
 
@@ -73,15 +55,19 @@ while step < n_steps:
     index = int(random.random() * n)
     beta = 0.0
     max_weight = max(weights)
-    for i in range(n):
+    for _ in range(n):
         beta += random.random() * 2.0 * max_weight
         while beta > weights[index]:
             beta -= weights[index]
             index = (index + 1) % n
-        particles_resample.append(particles[index])
+
+        # It is important to copy the Instance of the Robot() class
+        # here!!! Otherwise, it will end up with multiple groups of
+        # exactly same objects in the new particle swarm.
+        particles_resample.append(copy.copy(particles[index]))
 
     particles = particles_resample
 
-    print(eval(my_robot, particles))
+    print(rmse(my_robot, particles, space))
 
 

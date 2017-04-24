@@ -96,9 +96,6 @@ class Robot(object):
         :param forward: float
             Translation of the robot.
         """
-        if forward < 0:
-            raise ValueError('Robot cannot move backwards')
-
         # turn, and add randomness to the rotation
         self.orientation += turn + random.gauss(0.0, self.turn_noise)
 

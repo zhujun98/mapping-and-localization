@@ -5,10 +5,10 @@ Python script helps to understand particle filter
 """
 
 import random
-import copy
+import time
 
 from robot import Robot
-from utilities import rmse
+from utilities import rmse, resample
 
 
 landmarks = [[20.0, 20.0], [80.0, 80.0], [20.0, 80.0], [80.0, 20.0]]
@@ -30,6 +30,7 @@ print(rmse(my_robot, particles, space))
 
 step = 0
 n_steps = 20
+t_sum = 0.0  # time spent on sampling
 while step < n_steps:
     step += 1
 
@@ -45,29 +46,14 @@ while step < n_steps:
         particle.move(turn, forward)
 
     # Calculate the measurement probability for each robot
-    weights = []
     for particle in particles:
         particle.measurement_update(measurements)
-        weights.append(particle.prob)
 
     # Resample the robots
-    particles_resample = []
-    index = int(random.random() * n)
-    beta = 0.0
-    max_weight = max(weights)
-    for _ in range(n):
-        beta += random.random() * 2.0 * max_weight
-        while beta > weights[index]:
-            beta -= weights[index]
-            index = (index + 1) % n
-
-        # It is important to copy the Instance of the Robot() class
-        # here!!! Otherwise, it will end up with multiple groups of
-        # exactly same objects in the new particle swarm.
-        particles_resample.append(copy.copy(particles[index]))
-
-    particles = particles_resample
+    t0 = time.time()
+    particles = resample(particles)
+    t_sum += time.time() - t0
 
     print(rmse(my_robot, particles, space))
 
-
+print("Total sampling time: {:.4f}".format(t_sum))

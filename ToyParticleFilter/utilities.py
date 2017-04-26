@@ -64,10 +64,10 @@ def resample(particles, method='low_variance'):
     j = 0
     s = weights[0]
     if method == 'low_variance':
-        r = random.random() * 1.0/n
+        r = random.random() * 1.0 / n
         for i in range(n):
-            r += 1.0/n
-            while r > s and j < n - 1:
+
+            while r > s:
                 j += 1
                 s += weights[j]
 
@@ -75,6 +75,8 @@ def resample(particles, method='low_variance'):
             # here!!! Otherwise, it will end up with multiple groups of
             # exactly same objects in the new particle swarm.
             new_sample.append(copy.copy(particles[j]))
+            r += 1.0 / n
+
     elif method == 'wheel':
         i = int(random.random() * n)
         beta = 0.0

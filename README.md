@@ -4,7 +4,7 @@ Jun Zhu
 
 
 ## Test  codes
-- [1D Bayersian Filter](./1D-BayersianFilter)
+- [1D Bayersian Filter](./1D-BayesianFilter)
 - [Toy Particle Filter](./ToyParticleFilter)
 
 ## 2D Particle Filter

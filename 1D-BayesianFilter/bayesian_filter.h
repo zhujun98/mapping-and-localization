@@ -11,37 +11,37 @@
 
 #include "measurement_package.h"
 #include "map.h"
-#include "help_functions.h"
+#include "utilities.h"
 
-class BayesianFilter {
-
+class BayesianFilter
+{
 public:
-  //constructor
+  // Constructor
   BayesianFilter();
 
-  //destructor
+  // Destructor
   virtual ~BayesianFilter();
 
-  //estimate the beliefs
-  void process_measurement(const MeasurementPackage &measurements,
-                           const map &map_1d,
-                           help_functions &helpers);
+  // Estimate the beliefs
+  void processMeasurement(const MeasurementPackage &measurements,
+                          const Map &map_1d,
+                          Utilities &utilities);
 
-  //belief of state x
+  // Belief of state x
   std::vector<float> bel_x_;
 
 private:
 
-  //flag, if filter is initialized
+  // Flag, if filter is initialized
   bool is_initialized_;
 
-  //standard deviation of control
+  // Standard deviation of control
   float control_std_;
 
-  //standard deviation of observations:
+  // Standard deviation of observations:
   float observation_std_;
 
-  //initial belief of state x
+  // Initial belief of state x
   std::vector<float> bel_x_init_;
 
 };

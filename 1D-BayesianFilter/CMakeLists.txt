@@ -7,7 +7,7 @@ set(SOURCE_FILES
         main.cpp
         bayesian_filter.cpp
         bayesian_filter.h
-        help_functions.h
+        utilities.h
         map.h
         measurement_package.h)
 

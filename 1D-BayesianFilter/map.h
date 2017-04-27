@@ -4,16 +4,16 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-class map {
-
+class Map
+{
 public:
-  //definition of single landmark:
-  struct single_landmark_s{
-    int id_i;
-    float x_f;
+  // Define a single landmark:
+  struct Landmark
+  {
+    int id;
+    float x;
   };
 
-  //list of landmarks:
-  std::vector<single_landmark_s> landmark_list_;
+  std::vector<Landmark> landmark_list_;
 };
 #endif /* MAP_H_ */

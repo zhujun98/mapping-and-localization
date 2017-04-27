@@ -1,9 +1,9 @@
-# Sensor Fusion with Kalman Filter
+# Particle Filter
 Jun Zhu
 
 
 
-## Test  
+## Test  codes
 - [1D Bayersian Filter](./1D-BayersianFilter)
 - [Toy Particle Filter](./ToyParticleFilter)
 
@@ -12,3 +12,9 @@ Jun Zhu
 ![alt text](2D-ParticleFilter/flow_chart.png)
 
 Details can be found [here](./2D-ParticleFilter)
+
+
+## Reference
+
+- Sebastian Thrun, et al., "Probabilistic robotics"
+- Cyrill Stachniss, ["Robot mapping"]()

@@ -12,8 +12,8 @@
 #include "particle_filter.h"
 
 
-int main() {
-	
+int main()
+{
 	// Start timer.
 	clock_t start = std::clock();
 

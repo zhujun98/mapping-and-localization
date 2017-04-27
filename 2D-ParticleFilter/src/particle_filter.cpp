@@ -120,10 +120,12 @@ void ParticleFilter::dataAssociation(std::vector<Observation> prediction,
                                      std::vector<Observation>& measurement)
 {
   // What's the better algorithm to find the nearest neighbors?
-  for (size_t i=0; i<measurement.size(); ++i) {
+  for (size_t i=0; i<measurement.size(); ++i)
+  {
     double min_dist = sensor_range_*sensor_range_;
     double min_dist_index = 0;
-    for (size_t j=0; j<prediction.size(); ++j) {
+    for (size_t j=0; j<prediction.size(); ++j)
+    {
       double dx = prediction[j].x - measurement[i].x;
       double dy = prediction[j].y - measurement[i].y;
 
@@ -258,9 +260,8 @@ void ParticleFilter::resample()
 
 void ParticleFilter::writeParticle(std::string filename)
 {
-	// You don't need to modify this file.
 	std::ofstream dataFile;
-	dataFile.open(filename, std::ios::app);
+	dataFile.open(filename, std::ios::out);
 	for (size_t i = 0; i < particles_.size(); ++i)
   {
 		dataFile << particles_[i].x << " " << particles_[i].y << " "

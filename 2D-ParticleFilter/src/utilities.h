@@ -15,7 +15,8 @@
 //
 // control feedback
 //
-struct Control {
+struct Control
+{
 	double velocity; // Velocity [m/s]
 	double yaw_rate; // Yaw rate [rad/s]
 };
@@ -23,7 +24,8 @@ struct Control {
 //
 // ground truth coordinates
 //
-struct GroundTruth {
+struct GroundTruth
+{
 	double x; // Global vehicle x position [m]
 	double y;	// Global vehicle y position
 	double theta;	// Global vehicle yaw [rad]
@@ -32,7 +34,8 @@ struct GroundTruth {
 //
 // landmark observations
 //
-struct Observation {
+struct Observation
+{
 	int id; // Id of matching landmark in the map.
 	double x; // Local (vehicle coordinates) x position of landmark [m]
 	double y;	// Local (vehicle coordinates) y position of landmark [m]
@@ -43,12 +46,18 @@ struct Observation {
 // @param (x1,y1): x and y coordinates of first point
 // @param (x2,y2): x and y coordinates of second point
 // @return: Euclidean distance between two 2D points
-//
-//inline double distance(double x1, double y1, double x2, double y2) {
-//	return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-//}
 
-inline double * getError(double gt_x, double gt_y, double gt_theta, double pf_x, double pf_y, double pf_theta) {
+inline double distance(double x1, double y1, double x2, double y2)
+{
+	return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+//
+//
+//
+inline double * getError(double gt_x, double gt_y, double gt_theta,
+                         double pf_x, double pf_y, double pf_theta)
+{
 	static double error[3];
 	error[0] = fabs(pf_x - gt_x);
 	error[1] = fabs(pf_y - gt_y);
@@ -70,7 +79,6 @@ inline double * getError(double gt_x, double gt_y, double gt_theta, double pf_x,
 //
 inline bool readMapData(std::string filename, Map& map)
 {
-	// Get file of map
 	std::ifstream in_file_map(filename.c_str(), std::ifstream::in);
 
 	if (!in_file_map)
@@ -80,7 +88,6 @@ inline bool readMapData(std::string filename, Map& map)
 
 	std::string line_map;
 
-	// Run over each single line:
 	while(getline(in_file_map, line_map))
   {
 		std::istringstream iss_map(line_map);
@@ -161,9 +168,11 @@ inline bool readGroundTruthData(std::string filename, std::vector<GroundTruth>& 
 	return true;
 }
 
-/* Reads landmark observation data from a file.
- * @param filename Name of file containing landmark observation measurements.
- * @return True if opening and reading file was successful
+/*
+ * Reads landmark observation data from a file.
+ *
+ * @param filename: Name of file containing landmark observation measurements.
+ * @return: True if opening and reading file was successful
  */
 inline bool readLandmarkData(std::string filename, std::vector<Observation>& observations)
 {

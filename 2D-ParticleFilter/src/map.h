@@ -7,10 +7,12 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-class Map {
+class Map
+{
 public:
 	
-	struct Landmark{
+	struct Landmark
+  {
 		int id ; // Landmark ID
 		float x; // Landmark x-position in the map (global coordinates)
 		float y; // Landmark y-position in the map (global coordinates)

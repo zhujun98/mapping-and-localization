@@ -12,11 +12,11 @@
 
 struct Particle
 {
-	int id;
-	double x;
-	double y;
-	double theta;
-	double weight;
+  int id;
+  double x;
+  double y;
+  double theta;
+  double weight;
 };
 
 
@@ -35,7 +35,7 @@ public:
                           const std::vector<Control>& control,
                           const std::vector<Observation>& observations,
                           const Map& map,
-													int index);
+                          int index);
 
 private:
 
@@ -60,43 +60,43 @@ private:
   std::vector<double> sigma_landmark_;
 
   //
-	// Predicts the state for the next time step using the process model.
+  // Predicts the state for the next time step using the process model.
   //
-	// @param velocity Velocity of car from t to t+1 [m/s]
-	// @param yaw_rate Yaw rate of car from t to t+1 [rad/s]
-	//
-	void prediction(double velocity, double yaw_rate);
-	
-	//
-	// Finds which observations correspond to which landmarks (likely by using
-	// a nearest-neighbors data association).
+  // @param velocity Velocity of car from t to t+1 [m/s]
+  // @param yaw_rate Yaw rate of car from t to t+1 [rad/s]
   //
-	// @param prediction Vector of predicted landmark observations
-	// @param measurement Vector of landmark observations
-	//
-	void dataAssociation(std::vector<Observation> prediction,
-                       std::vector<Observation>& measurement);
-	
-	//
-	// Updates the weights for each particle based on the likelihood of the
-	// observed measurements.
+  void prediction(double velocity, double yaw_rate);
 
-	// @param observations Vector of landmark observations
-	// @param map Map class containing map landmarks
-	 //
-	void updateWeight(const std::vector<Observation>& observations,
+  //
+  // Finds which observations correspond to which landmarks (likely by using
+  // a nearest-neighbors data association).
+  //
+  // @param prediction Vector of predicted landmark observations
+  // @param measurement Vector of landmark observations
+  //
+  void dataAssociation(std::vector<Observation> prediction,
+                       std::vector<Observation>& measurement);
+
+  //
+  // Updates the weights for each particle based on the likelihood of the
+  // observed measurements.
+
+  // @param observations Vector of landmark observations
+  // @param map Map class containing map landmarks
+   //
+  void updateWeight(const std::vector<Observation>& observations,
                     const Map& map);
-	
-	//
-	// Resample from the updated set of particles to form the new set of particles.
-	//
-	void resample();
-	
-	//
+
+  //
+  // Resample from the updated set of particles to form the new set of particles.
+  //
+  void resample();
+
+  //
   // write Writes particle positions to a file.
   // @param filename File to write particle positions to.
   //
-	void writeParticle(std::string filename);
+  void writeParticle(std::string filename);
 };
 
 #endif /* PARTICLE_FILTER_H_ */

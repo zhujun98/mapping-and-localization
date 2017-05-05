@@ -17,8 +17,8 @@
 //
 struct Control
 {
-	double velocity; // Velocity [m/s]
-	double yaw_rate; // Yaw rate [rad/s]
+  double velocity; // Velocity [m/s]
+  double yaw_rate; // Yaw rate [rad/s]
 };
 
 //
@@ -26,9 +26,9 @@ struct Control
 //
 struct GroundTruth
 {
-	double x; // Global vehicle x position [m]
-	double y;	// Global vehicle y position
-	double theta;	// Global vehicle yaw [rad]
+  double x; // Global vehicle x position [m]
+  double y;	// Global vehicle y position
+  double theta;	// Global vehicle yaw [rad]
 };
 
 //
@@ -36,9 +36,9 @@ struct GroundTruth
 //
 struct Observation
 {
-	int id; // Id of matching landmark in the map.
-	double x; // Local (vehicle coordinates) x position of landmark [m]
-	double y;	// Local (vehicle coordinates) y position of landmark [m]
+  int id; // Id of matching landmark in the map.
+  double x; // Local (vehicle coordinates) x position of landmark [m]
+  double y;	// Local (vehicle coordinates) y position of landmark [m]
 };
 
 //
@@ -49,7 +49,7 @@ struct Observation
 
 inline double distance(double x1, double y1, double x2, double y2)
 {
-	return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+  return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
 //
@@ -58,16 +58,16 @@ inline double distance(double x1, double y1, double x2, double y2)
 inline double * getError(double gt_x, double gt_y, double gt_theta,
                          double pf_x, double pf_y, double pf_theta)
 {
-	static double error[3];
-	error[0] = fabs(pf_x - gt_x);
-	error[1] = fabs(pf_y - gt_y);
-	error[2] = fabs(pf_theta - gt_theta);
+  static double error[3];
+  error[0] = fabs(pf_x - gt_x);
+  error[1] = fabs(pf_y - gt_y);
+  error[2] = fabs(pf_theta - gt_theta);
   error[2] = fmod(error[2], 2.0 * M_PI);
   if (error[2] > M_PI)
   {
     error[2] = 2.0 * M_PI - error[2];
   }
-	return error;
+  return error;
 }
 
 //
@@ -79,28 +79,28 @@ inline double * getError(double gt_x, double gt_y, double gt_theta,
 //
 inline bool readMapData(std::string filename, Map& map)
 {
-	std::ifstream in_file_map(filename.c_str(), std::ifstream::in);
+  std::ifstream in_file_map(filename.c_str(), std::ifstream::in);
 
-	if (!in_file_map)
+  if (!in_file_map)
   {
-		return false;
-	}
+    return false;
+  }
 
-	std::string line_map;
+  std::string line_map;
 
-	while(getline(in_file_map, line_map))
+  while(getline(in_file_map, line_map))
   {
-		std::istringstream iss_map(line_map);
+    std::istringstream iss_map(line_map);
 
     Map::Landmark landmark;
 
     iss_map >> landmark.x;
-		iss_map >> landmark.y;
-		iss_map >> landmark.id;
+    iss_map >> landmark.y;
+    iss_map >> landmark.id;
 
-		map.landmark_list.push_back(landmark);
-	}
-	return true;
+    map.landmark_list.push_back(landmark);
+  }
+  return true;
 }
 
 //
@@ -112,27 +112,27 @@ inline bool readMapData(std::string filename, Map& map)
 //
 inline bool readControlData(std::string filename, std::vector<Control>& controls)
 {
-	std::ifstream in_file_pos(filename.c_str(),std::ifstream::in);
+  std::ifstream in_file_pos(filename.c_str(),std::ifstream::in);
 
-	if (!in_file_pos)
+  if (!in_file_pos)
   {
-		return false;
-	}
+    return false;
+  }
 
-	std::string line_pos;
+  std::string line_pos;
 
-	while(getline(in_file_pos, line_pos))
+  while(getline(in_file_pos, line_pos))
   {
-		std::istringstream iss_pos(line_pos);
+    std::istringstream iss_pos(line_pos);
 
-		Control control;
+    Control control;
 
-		iss_pos >> control.velocity;
-		iss_pos >> control.yaw_rate;
+    iss_pos >> control.velocity;
+    iss_pos >> control.yaw_rate;
 
-		controls.push_back(control);
-	}
-	return true;
+    controls.push_back(control);
+  }
+  return true;
 }
 
 //
@@ -144,28 +144,28 @@ inline bool readControlData(std::string filename, std::vector<Control>& controls
 //
 inline bool readGroundTruthData(std::string filename, std::vector<GroundTruth>& ground_truths)
 {
-	std::ifstream in_file_pos(filename.c_str(),std::ifstream::in);
+  std::ifstream in_file_pos(filename.c_str(),std::ifstream::in);
 
-	if (!in_file_pos)
+  if (!in_file_pos)
   {
-		return false;
-	}
+    return false;
+  }
 
-	std::string line_pos;
+  std::string line_pos;
 
-	while(getline(in_file_pos, line_pos))
+  while(getline(in_file_pos, line_pos))
   {
-		std::istringstream iss_pos(line_pos);
+    std::istringstream iss_pos(line_pos);
 
-		GroundTruth ground_truth;
+    GroundTruth ground_truth;
 
-		iss_pos >> ground_truth.x;
-		iss_pos >> ground_truth.y;
-		iss_pos >> ground_truth.theta;
+    iss_pos >> ground_truth.x;
+    iss_pos >> ground_truth.y;
+    iss_pos >> ground_truth.theta;
 
-		ground_truths.push_back(ground_truth);
-	}
-	return true;
+    ground_truths.push_back(ground_truth);
+  }
+  return true;
 }
 
 /*
@@ -176,27 +176,27 @@ inline bool readGroundTruthData(std::string filename, std::vector<GroundTruth>& 
  */
 inline bool readLandmarkData(std::string filename, std::vector<Observation>& observations)
 {
-	std::ifstream in_file_obs(filename.c_str(),std::ifstream::in);
+  std::ifstream in_file_obs(filename.c_str(),std::ifstream::in);
 
-	if (!in_file_obs)
+  if (!in_file_obs)
   {
-		return false;
-	}
+    return false;
+  }
 
-	std::string line_obs;
+  std::string line_obs;
 
-	while(getline(in_file_obs, line_obs))
+  while(getline(in_file_obs, line_obs))
   {
-		std::istringstream iss_obs(line_obs);
+    std::istringstream iss_obs(line_obs);
 
     Observation observation;
 
-		iss_obs >> observation.x;
-		iss_obs >> observation.y;
+    iss_obs >> observation.x;
+    iss_obs >> observation.y;
 
     observations.push_back(observation);
-	}
-	return true;
+  }
+  return true;
 }
 
 #endif /* UTILITIES_H_ */

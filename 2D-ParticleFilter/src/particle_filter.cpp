@@ -260,12 +260,12 @@ void ParticleFilter::resample()
 
 void ParticleFilter::writeParticle(std::string filename)
 {
-	std::ofstream dataFile;
-	dataFile.open(filename, std::ios::out);
-	for (size_t i = 0; i < particles_.size(); ++i)
+  std::ofstream dataFile;
+  dataFile.open(filename, std::ios::out);
+  for (size_t i = 0; i < particles_.size(); ++i)
   {
-		dataFile << particles_[i].x << " " << particles_[i].y << " "
+    dataFile << particles_[i].x << " " << particles_[i].y << " "
              << particles_[i].theta << "\n";
-	}
-	dataFile.close();
+  }
+  dataFile.close();
 }

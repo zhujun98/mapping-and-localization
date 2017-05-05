@@ -10,15 +10,15 @@
 class Map
 {
 public:
-	
-	struct Landmark
-  {
-		int id ; // Landmark ID
-		float x; // Landmark x-position in the map (global coordinates)
-		float y; // Landmark y-position in the map (global coordinates)
-	};
 
-	std::vector<Landmark> landmark_list ;
+  struct Landmark
+  {
+    int id ; // Landmark ID
+    float x; // Landmark x-position in the map (global coordinates)
+    float y; // Landmark y-position in the map (global coordinates)
+  };
+
+  std::vector<Landmark> landmark_list ;
 
 };
 

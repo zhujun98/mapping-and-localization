@@ -10,8 +10,7 @@
 #include "utilities.h"
 
 
-struct Particle
-{
+struct Particle {
   int id;
   double x;
   double y;
@@ -20,8 +19,7 @@ struct Particle
 };
 
 
-class ParticleFilter
-{
+class ParticleFilter {
 public:
   // Constructor
   ParticleFilter();
@@ -55,7 +53,6 @@ private:
 
   // GPS measurement uncertainty: x [m], y [m], theta [rad]
   std::vector<double> sigma_gps_;
-
   // Landmark measurement uncertainty: x [m], y [m]
   std::vector<double> sigma_landmark_;
 
@@ -84,8 +81,7 @@ private:
   // @param observations Vector of landmark observations
   // @param map Map class containing map landmarks
    //
-  void updateWeight(const std::vector<Observation>& observations,
-                    const Map& map);
+  void updateWeight(const std::vector<Observation>& observations, const Map& map);
 
   //
   // Resample from the updated set of particles to form the new set of particles.

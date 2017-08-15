@@ -12,23 +12,17 @@
 #include "particle_filter.h"
 
 
-int main()
-{
+int main() {
   // Start timer.
   clock_t start = std::clock();
 
   // Read map data
   Map map;
-  if (!readMapData("data/map_data.txt", map))
-  {
-    std::cout << "Error: Could not open map file" << std::endl;
-    return -1;
-  }
+  map.readData("data/map_data.txt");
 
   // Read position data
   std::vector<Control> control_feedback;
-  if (!readControlData("data/control_data.txt", control_feedback))
-  {
+  if (!readControlData("data/control_data.txt", control_feedback)) {
     std::cout << "Error: Could not open control_feedback data file"
               << std::endl;
     return -1;
@@ -36,8 +30,7 @@ int main()
 
   // Read ground truth data
   std::vector<GroundTruth> ground_truth;
-  if (!readGroundTruthData("data/gt_data.txt", ground_truth))
-  {
+  if (!readGroundTruthData("data/gt_data.txt", ground_truth)) {
     std::cout << "Error: Could not open ground truth data file" << std::endl;
     return -1;
   }
@@ -55,8 +48,7 @@ int main()
   std::vector<double> total_error = {0, 0, 0};
   std::vector<double> cumulated_mean_error = {0, 0, 0};
 
-  for (int i = 0; i < num_time_steps; ++i)
-  {
+  for (int i = 0; i < num_time_steps; ++i) {
     std::cout << "Time step: " << i << std::endl;
     // Read in landmark observations for current time step.
     std::ostringstream file;
@@ -76,10 +68,8 @@ int main()
     // filter over all time steps so far.
     double highest_weight = 0.0;
     Particle best_particle;
-    for (size_t j=0; j < particle_filter.particles_.size(); ++j)
-    {
-      if (particle_filter.particles_[j].weight > highest_weight)
-      {
+    for (size_t j=0; j < particle_filter.particles_.size(); ++j) {
+      if (particle_filter.particles_[j].weight > highest_weight) {
         highest_weight = particle_filter.particles_[j].weight;
         best_particle = particle_filter.particles_[j];
       }
@@ -90,8 +80,7 @@ int main()
                                  best_particle.x, best_particle.y,
                                  best_particle.theta);
 
-    for (int k = 0; k < 3; ++k)
-    {
+    for (int k = 0; k < 3; ++k) {
       total_error[k] += avg_error[k];
       cumulated_mean_error[k] = total_error[k] / (double)(i + 1);
     }
